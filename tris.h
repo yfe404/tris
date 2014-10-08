@@ -87,6 +87,6 @@
 /*            complexite->nb_copies                                           */
 /* -------------------------------------------------------------------------- */
 
-   structSondes tri_rapide(int *t, int gauche, int droite);
+structSondes tri_rapide(int *t, int gauche, int droite);
 
 

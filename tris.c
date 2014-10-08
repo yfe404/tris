@@ -33,6 +33,24 @@ structSondes tri_bulle_bool(int *t, int n)
 {
 	structSondes sondes = {0,0,0}; 
 
+	int echange = FALSE;
+
+	for(int i = 0; i < n-1; ++i)
+	{
+		for(int j = 0; j < n-1; ++j)
+		{
+			++sondes.nb_comparaisons;
+			if(t[j] > t[j+1]) {
+				echanger(t, j, j+1);
+				echange=TRUE;
+				sondes.nb_copies+=3;
+				++sondes.nb_echanges;
+			}
+		}
+		if(echange == FALSE) return sondes;
+		echange = FALSE;
+	}
+
 
 	return sondes;
 }
@@ -42,21 +60,26 @@ structSondes tri_bulle_opt(int *t, int n)
 {
 	structSondes sondes = {0,0,0}; 
 	int tmp = n;
-	int posLastSwap = tmp;
+	int posLastSwap = tmp;	/* Position du dernier échange (évite de tout reparcourir) */
+	int echange = FALSE;
 
-	for(int i = 0; i < n -1; ++i)
+	for(int i = 0; i < n-1; ++i)
 	{
-		for(int j = 0; j < tmp; ++j)
+		for(int j = 0; j < tmp-1; ++j)
 		{
 			++sondes.nb_comparaisons;
 			if(t[j] > t[j+1]) {
+				printf("%d > %d\n", t[j], t[j+1]);
 				echanger(t, j,j+1);
+				echange = TRUE;
 				posLastSwap = j;
 				sondes.nb_copies+=3;
 				++sondes.nb_echanges;
 			}
 		}
 		tmp = posLastSwap;
+		if(echange == FALSE) return sondes;
+		echange = FALSE;
 	}
 
 	return sondes;
@@ -65,7 +88,19 @@ structSondes tri_bulle_opt(int *t, int n)
 
 structSondes tri_insertion(int *t, int n)
 {
-	structSondes sondes; /* @todo utiliser sonde */
+	structSondes sondes = {0,0,0}; /* @todo utiliser sonde */
+	int j;
+
+	for(int i = 1; i <= n-1; ++i){
+		int v = t[i];
+		j = i;
+
+		while(t[j-1] > v) {
+			t[j] = t[j-1]; j = j - 1;
+		}
+	t[j] = v;	
+
+	}	
 
 	return sondes;
 }
